@@ -15,12 +15,12 @@ def check_xml(argv=None):
 
     retval = 0
     for filename in args.filenames:
-        try:
-            with io.open(filename, 'rb') as xml_file:
+        with io.open(filename, 'rb') as xml_file:
+            try:
                 xml.sax.parse(xml_file, xml.sax.ContentHandler())
-        except xml.sax.SAXException as exc:
-            print('{}: Failed to xml parse ({})'.format(filename, exc))
-            retval = 1
+            except xml.sax.SAXParseException as exc:
+                print(exc)
+                retval = 1
     return retval
 
 
